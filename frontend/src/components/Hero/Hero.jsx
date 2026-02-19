@@ -29,7 +29,7 @@ function Hero() {
         </p>
 
         <div className="hero-buttons">
-          <a href="#process">
+          <a href="#contact">
             <button className="primary-btn">
               Get a Free Infrastructure Health Check
             </button>

@@ -11,21 +11,30 @@ import AdminTeam from "./pages/Admin/AdminTeam";
 import AdminServices from "./pages/Admin/AdminServices";
 import ProtectedRoute from "./components/protectedRoute";
 import ServicesPage from "./pages/ServicesPage";
-import Navbar from "./components/Navbar/Navbar"; // Ensure this import exists
+import Navbar from "./components/Navbar/Navbar"; 
+import MemberLogin from "./pages/TeamMember/MemberLogin"; // Fixed typo in name
+import MemberRegister from "./pages/TeamMember/MemberRegister";
+import MemberDashboard from "./pages/TeamMember/MemberDashboard";
 
 function AppContent() {
   const location = useLocation();
 
-  // Define logic to hide Navbar on admin routes or the login page
-  const hideNavbar = location.pathname.startsWith("/admin") || location.pathname === "/admin-login";
+  // Logic to hide Navbar on Admin, Login, and Dashboard routes
+  // This ensures the Member Dashboard feels like a private workstation
+  const hideNavbar = 
+    location.pathname.startsWith("/admin") || 
+    location.pathname === "/admin-login" ||
+    location.pathname === "/member-login" ||
+    location.pathname === "/member-register" ||
+    location.pathname === "/member-dashboard";
 
   return (
     <>
-      {/* Navbar will only render if hideNavbar is false */}
+      {/* Navbar renders only for public website pages */}
       {!hideNavbar && <Navbar />}
 
       <Routes>
-        {/* Public Routes */}
+        {/* --- PUBLIC WEBSITE ROUTES --- */}
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about/company" element={<Company />} />
@@ -33,10 +42,24 @@ function AppContent() {
         <Route path="/team" element={<Team />} />
         <Route path="/services/:categoryName" element={<ServicesPage />} />
         
-        {/* Admin Login */}
+        {/* --- MEMBER AUTHENTICATION ROUTES --- */}
+        <Route path="/member-login" element={<MemberLogin />} />
+        <Route path="/member-register" element={<MemberRegister />} />
+        
+        {/* --- PROTECTED MEMBER ROUTES --- */}
+        <Route 
+          path="/member-dashboard" 
+          element={
+            <ProtectedRoute>
+              <MemberDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        
+        {/* --- ADMIN AUTHENTICATION --- */}
         <Route path="/admin-login" element={<AdminLogin />} />
 
-        {/* Protected Admin Routes */}
+        {/* --- PROTECTED ADMIN ROUTES --- */}
         <Route
           path="/admin/*"
           element={
@@ -45,6 +68,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         >
+          {/* These render inside AdminLayout's <Outlet /> */}
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="team" element={<AdminTeam />} />
           <Route path="services" element={<AdminServices />} />

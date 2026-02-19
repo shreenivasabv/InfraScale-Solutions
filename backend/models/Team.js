@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const teamSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
+  email: { type: String, required: true },
   designation: String,
   specialization: String,
   experience: Number,

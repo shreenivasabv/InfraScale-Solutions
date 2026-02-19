@@ -39,7 +39,7 @@ function Navbar() {
           onMouseEnter={() => handleMouseEnter("solutions")} 
           onMouseLeave={handleMouseLeave}
         >
-          <span>Our Solutions ▾</span>
+          <span>Our Expertise ▾</span>
           {openMenu === "solutions" && (
             <ul className="dropdown-menu">
               {/* IMPORTANT: These 'to' paths should match the 

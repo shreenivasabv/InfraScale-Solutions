@@ -52,10 +52,18 @@ async function createDefaultAdmin() {
 createDefaultAdmin();
 
 // --- ROUTES ---
-app.use("/api/services", require( "./routes/serviceRoutes"));
-app.use("/api/contact", require("./routes/contactRoutes"));
-app.use("/api/admin", require("./routes/adminRoutes"));
-app.use("/api/team", require("./routes/teamRoutes"));
 app.use("/api/services", require("./routes/serviceRoutes"));
+app.use("/api/contact", require("./routes/contactRoutes"));
+app.use("/api/team", require("./routes/teamRoutes"));
 
-app.listen(5000, () => console.log("🚀 Server Running on http://localhost:5000"));
+// Member Profile & Dashboard
+app.use("/api/member-auth", require("./routes/MemberAuthRoutes"));
+app.use("/api/member-profile", require("./routes/MemberProfileRoutes"));
+
+;
+
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`🚀 Server Running on http://localhost:${PORT}`);
+});

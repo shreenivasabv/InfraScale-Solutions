@@ -21,6 +21,7 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
 
     const newMember = new Team({
       name: req.body.name,
+      email: req.body.email,
       designation: req.body.designation,
       specialization: req.body.specialization,
       experience: req.body.experience,
@@ -34,6 +35,9 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
     res.status(400).json({ message: "Error creating member", error: err.message });
   }
 });
+
+
+
 
 // DELETE
 router.delete("/:id", auth, async (req, res) => {
